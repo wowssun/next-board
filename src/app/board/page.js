@@ -1,17 +1,30 @@
+'use server'
+
 import Link from "next/link"
 import SectionMenu from './../../components/SectionMenu';
+import { PrismaClient } from '@prisma/client'
 import './../globals.css';
 
-export default function Page() {
+export default async function Page() {
+   const prisma = new PrismaClient();
+
+   const posts = await prisma.post.findMany({
+      orderBy: {
+        id: 'desc', // 게시판 번호 기준으로 내림차순 정렬
+      },
+    });
+   
  return(
    <>
     <SectionMenu title={'게시판'}/>
-      <div id='tableId' className="relative overflow-x-auto shadow-md sm:rounded-lg mx-auto mb-10">
+    <div>
+      {posts && posts.length > 0 ? (
+         <div id='tableId' className="relative overflow-x-auto shadow-md sm:rounded-lg mx-auto mb-10">
          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                      <th scope="col" className="px-6 py-3 text-center">
-                        
+                        {/*게시판 번호*/}
                      </th>
                      <th scope="col" className="px-6 py-3">
                         제목
@@ -25,216 +38,35 @@ export default function Page() {
                      <th scope="col" className="px-6 py-3">
                         조회수
                      </th>
-                     <th scope="col" className="px-6 py-3">
-                        Action
-                     </th>
                   </tr>
             </thead>
             <tbody>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+         {posts.map((post) => (
+            <tr key={post.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                      <td className="px-6 py-4 text-center">
-                        1
+                         {post.id} {/* 게시글 번호 */}
                      </td>
                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Apple MacBook Pro 17"
+                     <Link href={`board/${post.id}`}> {post.title} {/* 게시글 번호 */} </Link>
                      </th>
                      <td className="px-6 py-4">
-                        Silver
+                        {post.authorId} {/* 게시글 작성자 */}
                      </td>
                      <td className="px-6 py-4">
-                        Laptop
+                        {new Date(post.createdAt).toLocaleDateString()} {/* 게시글 작성일 함수로 따로 빼서 */}
                      </td>
                      <td className="px-6 py-4">
-                        $2999
-                     </td>
-                     <td className="px-6 py-4">
-                        <Link href="/board/1" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
+                        0(미정) {/* 게시글 조회수 */}
                      </td>
                   </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                     <td className="px-6 py-4 text-center">
-                        2
-                     </td>
-                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Microsoft Surface Pro
-                     </th>
-                     <td className="px-6 py-4">
-                        White
-                     </td>
-                     <td className="px-6 py-4">
-                        Laptop PC
-                     </td>
-                     <td className="px-6 py-4">
-                        $1999
-                     </td>
-                     <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                     </td>
-                  </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                     <td className="px-6 py-4 text-center">
-                        3
-                     </td>
-                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Magic Mouse 2
-                     </th>
-                     <td className="px-6 py-4">
-                        Black
-                     </td>
-                     <td className="px-6 py-4">
-                        Accessories
-                     </td>
-                     <td className="px-6 py-4">
-                        $99
-                     </td>
-                     <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                     </td>
-                  </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                     <td className="px-6 py-4 text-center">
-                        4
-                     </td>
-                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Apple Watch
-                     </th>
-                     <td className="px-6 py-4">
-                        Black
-                     </td>
-                     <td className="px-6 py-4">
-                        Watches
-                     </td>
-                     <td className="px-6 py-4">
-                        $199
-                     </td>
-                     <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                     </td>
-                  </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                     <td className="px-6 py-4 text-center">
-                        5
-                     </td>
-                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Apple iMac
-                     </th>
-                     <td className="px-6 py-4">
-                        Silver
-                     </td>
-                     <td className="px-6 py-4">
-                        PC
-                     </td>
-                     <td className="px-6 py-4">
-                        $2999
-                     </td>
-                     <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                     </td>
-                  </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                     <td className="px-6 py-4 text-center">
-                        6
-                     </td>
-                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Apple AirPods
-                     </th>
-                     <td className="px-6 py-4">
-                        White
-                     </td>
-                     <td className="px-6 py-4">
-                        Accessories
-                     </td>
-                     <td className="px-6 py-4">
-                        $399
-                     </td>
-                     <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                     </td>
-                  </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <td className="px-6 py-4 text-center">
-                        7
-                     </td>
-                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        iPad Pro
-                     </th>
-                     <td className="px-6 py-4">
-                        Gold
-                     </td>
-                     <td className="px-6 py-4">
-                        Tablet
-                     </td>
-                     <td className="px-6 py-4">
-                        $699
-                     </td>
-                     <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                     </td>
-                  </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <td className="px-6 py-4 text-center">
-                        8
-                     </td>
-                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Magic Keyboard
-                     </th>
-                     <td className="px-6 py-4">
-                        Black
-                     </td>
-                     <td className="px-6 py-4">
-                        Accessories
-                     </td>
-                     <td className="px-6 py-4">
-                        $99
-                     </td>
-                     <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                     </td>
-                  </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <td className="px-6 py-4 text-center">
-                        9
-                     </td>
-                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Smart Folio iPad Air
-                     </th>
-                     <td className="px-6 py-4">
-                        Blue
-                     </td>
-                     <td className="px-6 py-4">
-                        Accessories
-                     </td>
-                     <td className="px-6 py-4">
-                        $79
-                     </td>
-                     <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                     </td>
-                  </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <td className="px-6 py-4 text-center">
-                        10
-                     </td>
-                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        AirTag
-                     </th>
-                     <td className="px-6 py-4">
-                        Silver
-                     </td>
-                     <td className="px-6 py-4">
-                        Accessories
-                     </td>
-                     <td className="px-6 py-4">
-                        $29
-                     </td>
-                     <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                     </td>
-                  </tr>
-            </tbody>
+         ))}
+         </tbody>
          </table>
-         <nav className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-8" aria-label="Table navigation">
-            <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing <span className="font-semibold text-gray-900 dark:text-white">1-10</span> of <span className="font-semibold text-gray-900 dark:text-white">1000</span></span>
+         </div>
+      ) : (
+         <p>게시물이 없습니다</p> // posts가 없을 경우 표시할 메시지
+      )}
+      <nav className="flex items-center flex-column flex-wrap md:flex-row justify-center py-8" aria-label="Table navigation">
             <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                   <li>
                      <a href="#" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
@@ -259,8 +91,7 @@ export default function Page() {
                   </li>
             </ul>
          </nav>
-      </div>
-
+      </div>        
    </>
  )
 }
