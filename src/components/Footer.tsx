@@ -11,7 +11,7 @@ export function Footer() {
           </p>
             <ul className="flex gap-4">
                 <li>  
-                    <a>링크 주소</a>
+                    <a>wowssun</a>
                 </li>
             </ul>
         </div>

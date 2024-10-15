@@ -29,7 +29,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/components/Header.js"  ],
+, "src/components/Header.js", "src/app/board/write/page.tsx", "src/app/board/edit/[id]/page.js"  ],
   "exclude": [
     "node_modules"
   ]
