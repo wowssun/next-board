@@ -1,10 +1,14 @@
 import SectionMenu from "../../../../components/SectionMenu";
-import { PrismaClient } from '@prisma/client'
 import Link from "next/link"
+import prisma from "../../../../lib/db";
+import { deletePost } from "../../../../actions/actions";
 
-export default async function Page({ params }) {
+// 게시글 상세 조회 페이지
+export default async function Page({ params, searchParams }) {
 
-    const prisma = new PrismaClient();
+   const { page, ...queryParams } = searchParams;
+   const p = page ? parseInt(page) : 1;
+
     const id = Number(params.id);
 
     const post = await prisma.post.findUnique({
@@ -35,7 +39,7 @@ export default async function Page({ params }) {
                     <div className="flex justify-between items-center py-8">
                     <div className="flex flex-wrap">
                         <Link 
-                        href={'/board?page=1'} 
+                        href={`/board?page=${p}`} 
                         type="button" 
                         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                         >
@@ -44,18 +48,20 @@ export default async function Page({ params }) {
                     </div>
                     <div className="flex flex-wrap">
                         <Link 
-                        href={`/board/edit/${post.id}`}
+                        href={`/board/edit/${post.id}?page=${p}`}
                         className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
                         >
                         수정
                         </Link>
-                        <button 
-                        type="submit" 
-                        name="delete"
-                        className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        >
-                        삭제
-                        </button>
+                        <form action={deletePost}>
+                            <input type="hidden" name="id" value={id} />
+                            <button 
+                            type="submit" 
+                            className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                            >
+                            삭제
+                            </button>
+                        </form>
                     </div>
                     </div> 
                 </article>
