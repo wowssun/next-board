@@ -37,10 +37,22 @@ export async function deletePost(formData : FormData) {
      // 아이디 string으로 넘어와서 numner로 변경
      const deleteId = Number(formData.get('id'));
 
-     // 삭제 알림창 안되니까 모달로 해야함?
-     // 일단 삭제는 여기
+  // 버튼 컴포넌트를 만든 후에 알림창을 띄우고 여기로 이동
+  // formData 받아서 여기서 데이터 처리
    await prisma.post.delete({
         where: { id : deleteId },
       })
       redirect('/board');
+}
+
+// 회원가입 (회원계정 생성)
+export async function createUser(formData : FormData) {
+  await prisma.user.create({
+    data: {
+      id: formData.get('userId') as string,
+      name: formData.get('name') as string,
+      password: formData.get('password') as string,
+    },
+  });
+  redirect('/');  // 가입을 축하합니다? 라는 상태메시지를 가져가야 하나? 뭔가 액션이 있었으면 좋겠다.
 }

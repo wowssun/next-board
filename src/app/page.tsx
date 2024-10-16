@@ -5,7 +5,6 @@ import SectionHeader from './../components/SectionHeader';
   return (
     <main>
       <SectionHeader/>
-
     </main> 
   );
 }
