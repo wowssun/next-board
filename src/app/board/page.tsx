@@ -30,32 +30,32 @@ export default async function Page( {
    <>
     <SectionMenu title={'게시판'}/>
     <div>
-    <div className="relative sm:rounded-lg mx-auto mb-10 flex justify-end sm:justify-center ">
+    <div className="relative sm:rounded-lg mx-auto mb-10 flex justify-end sm:justify-center">
       <Link 
          href={`/board/write`}
-         className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+         className="focus:outline-none text-[#071952] bg-[#FFDA76] hover:bg-[#F3CA52] focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
          >
          게시글 작성
          </Link>
     </div>
    {/* 게시판 목록 */}
       {posts && posts.length > 0 ? (
-      <div id='tableId' className="relative overflow-x-auto shadow-md sm:rounded-lg mx-auto mb-10 lg:w-[1000px]">
+      <div id='tableId' className="relative overflow-x-auto shadow-md  sm:rounded-lg mx-auto mb-10 lg:w-[1000px]">
          {/* Header */}
-         <div className="hidden sm:flex md:text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
-            <div className="px-6 py-3 text-center flex-1">
+         <div className="hidden sm:flex md:text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center bg-[#d8dfed] text-[#071952]">
+            <div className="md:px-6 md:py-3 px-6 py-3 text-center flex-none w-24">
             {/* 게시판 번호 */}
             </div>
-            <div className="md:px-6 md:py-3 px-6 py-3 text-left flex-2">
+            <div className="md:px-6 md:py-3 px-6 py-3 text-left flex-1">
             제목
             </div>
-            <div className="md:px-6 md:py-3 px-6 py-3 text-center flex-1">
+            <div className="md:px-6 md:py-3 px-6 py-3 text-center flex-none sm:w-[160px]">
             작성자
             </div>
-            <div className="md:px-6 md:py-3 px-6 py-3 text-center flex-1">
+            <div className="md:px-6 md:py-3 px-6 py-3 text-center flex-none sm:w-[140px]">
             작성일
             </div>
-            <div className="md:px-6 md:py-3 px-6 py-3 text-center flex-1 hidden sm:block">
+            <div className="md:px-6 md:py-3 px-6 py-3 text-center flex-none hidden sm:block w-40">
             조회수
             </div>
          </div>
@@ -65,25 +65,25 @@ export default async function Page( {
             {posts.map((post) => (
             <div key={post.id} className="flex text-sm flex-wrap bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                {/* 게시글 번호 */}
-               <div className="px-6 py-4 text-center flex-1 hidden sm:block text-gray-300">
+               <div className="px-5 py-4 text-center flex-none w-24 hidden sm:block text-gray-300 items-stretch">
                   {post.id} {/* 게시글 번호 */}
                </div>
                {/* 게시글 제목 */}
-               <div className="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white text-left line-clamp-1 ">
+               <div className="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white text-left truncate sm:truncate sm:max-w-[400px] min-w-[400px]  ">
                   <Link href={`board/view/${post.id}?page=${p}`}>{post.title}</Link> {/* 게시글 제목 */}
                </div>
                {/* 게시글 작성자 */}
-               <div className="flex flex-1 justify-between">
-                  <div className="px-6 py-4 text-center flex-1 text-sm text-gray-400">
+               <div className="flex flex-1 sm:justify-end justify-between ">
+                  <div className="px-6 py-2 sm:px-6 sm:py-4 text-center flex-none text-sm text-gray-400 sm:w-[160px] ">
                      {post.authorId} {/* 게시글 작성자 */}
                   </div>
                   {/* 게시글 작성일 */}
-                  <div className="px-6 py-4 text-center flex-1 text-sm text-gray-400">
+                  <div className="px-6 py-2 sm:px-6 sm:py-4 text-center flex-none text-sm text-gray-400 sm:w-[140px]">
                      {new Date(post.createdAt).toLocaleDateString()} {/* 게시글 작성일 */}
                   </div>
                </div>
                {/* 게시글 조회수 */}
-               <div className="px-6 py-4 text-center flex-1 hidden sm:block text-sm text-gray-400">
+               <div className="px-6 py-2 sm:px-6 sm:py-4 text-center flex-none hidden sm:block text-sm text-gray-400 w-40">
                   0(미정) {/* 게시글 조회수 */}
                </div>
             </div>
