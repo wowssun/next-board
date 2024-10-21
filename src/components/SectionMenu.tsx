@@ -1,5 +1,3 @@
-import deskImage from '../images/desk.jpg'
-
 export default function SectionMenu(props) {
     return (
         <section className="bg-[url('../images/line-note.jpg')] bg-[length:1061px] bg-center dark:bg-gray-900 pt-20 mb-20">

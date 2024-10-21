@@ -1,5 +1,12 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/actions/*": ["actions/*"],
+      "@/lib/*": ["lib/*"],
+    },
+
     "lib": [
       "dom",
       "dom.iterable",
@@ -22,7 +29,8 @@
       }
     ],
     "forceConsistentCasingInFileNames": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    
   },
   "include": [
     "next-env.d.ts",

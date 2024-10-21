@@ -1,5 +1,4 @@
-import Image from "next/image";
-import SectionHeader from './../components/SectionHeader';
+import SectionHeader from '@/components/SectionHeader';
 
  export default function Home() {
   return (

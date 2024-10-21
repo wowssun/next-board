@@ -1,7 +1,7 @@
 import localFont from 'next/font/local'
 import "./globals.css";
-import { Footer } from './../components/Footer';
-import { Navbar } from './../components/Navbar';
+import { Footer } from '@/components/Footer';
+import { Navbar } from '@/components/Navbar';
 
 const gmarkSansL = localFont({
   src: './fonts/GmarketSansTTFLight.ttf',

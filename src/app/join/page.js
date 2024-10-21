@@ -1,6 +1,6 @@
 import Link from "next/link";
-import SectionMenu from "../../components/SectionMenu";
-import { createUser } from "../../actions/actions";
+import SectionMenu from "@/components/SectionMenu";
+import { createUser } from "@/actions/actions";
 
 // 회원가입 페이지 
 export default function Page() {

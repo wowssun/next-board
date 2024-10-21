@@ -1,11 +1,14 @@
 'use server';
 
-import prisma from "../lib/db";
+// @ alias path 설정하기
+import prisma from "@/lib/db";
 import { redirect } from 'next/navigation';
 
 // 게시물 작성
+/**
+ * @param {FormData} formData 
+ */
 export async function createPost(formData : FormData) {
-
     await prisma.post.create({
         data: {
           title: formData.get('title') as string,
@@ -32,15 +35,12 @@ export async function updatePost(formData : FormData) {
           redirect(`/board/view/${updateId}?page=${updatePage}`);
 }
 
-// 게시물 삭제
-export async function deletePost(formData : FormData) {
-     // 아이디 string으로 넘어와서 numner로 변경
-     const deleteId = Number(formData.get('id'));
-
+// 게시물 삭제  
+export async function deletePost(deleteId: string) {
+  
   // 버튼 컴포넌트를 만든 후에 알림창을 띄우고 여기로 이동
-  // formData 받아서 여기서 데이터 처리
    await prisma.post.delete({
-        where: { id : deleteId },
+        where: { id : Number(deleteId) },
       })
       redirect('/board');
 }

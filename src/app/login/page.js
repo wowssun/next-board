@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SectionMenu from "../../components/SectionMenu";
+import SectionMenu from "@/components/SectionMenu";
 
 // 로그인 페이지
 export default function Page() {

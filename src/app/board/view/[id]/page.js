@@ -1,22 +1,22 @@
-import SectionMenu from "../../../../components/SectionMenu";
+import SectionMenu from "@/components/SectionMenu";
 import Link from "next/link"
-import prisma from "../../../../lib/db";
-import { deletePost } from "../../../../actions/actions";
+import prisma from "@/lib/db";
+import { deletePost } from "@/actions/actions";
+import DeleteButton from "@/components/DeleteButton";
 
 // 게시글 상세 조회 페이지
 export default async function Page({ params, searchParams }) {
 
-   const { page, ...queryParams } = searchParams;
-   const p = page ? parseInt(page) : 1;
+  const { page, ...queryParams } = searchParams;
+  const p = page ? parseInt(page) : 1;
 
-    const id = Number(params.id);
-
-    const post = await prisma.post.findUnique({
+  const id = Number(params.id);
+  const post = await prisma.post.findUnique({
         where: {
           id: id,
         },
       })
-      
+
     return (
       <>
         <SectionMenu title={'게시판'}/>
@@ -53,15 +53,7 @@ export default async function Page({ params, searchParams }) {
                         >
                         수정
                         </Link>
-                        <form action={deletePost}>
-                            <input type="hidden" name="id" value={id} />
-                            <button 
-                            type="submit" 
-                            className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                            >
-                            삭제
-                            </button>
-                        </form>
+                        <DeleteButton id={post.id}/>
                     </div>
                     </div> 
                 </article>

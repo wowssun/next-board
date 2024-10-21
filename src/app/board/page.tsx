@@ -1,9 +1,8 @@
 import Link from "next/link"
-import SectionMenu from '../../components/SectionMenu';
-import Pagination from '../../components/Pagination';
+import SectionMenu from '@/components/SectionMenu';
+import Pagination from '@/components/Pagination';
 import './../globals.css';
-import prisma from "../../lib/db";
-import { ITEM_PER_PAGE } from "../../lib/settings";
+import prisma from "@/lib/db";
 
 // 게시판 목록 페이지
 export default async function Page( {
@@ -14,6 +13,7 @@ export default async function Page( {
    const { page, ...queryParams } = searchParams;
    const p = page ? parseInt(page) : 1;
 
+   const ITEM_PER_PAGE = Number(process.env.ITEM_PER_PAGE) || 10;
    
       const [posts, count] = await prisma.$transaction([
          prisma.post.findMany({
@@ -25,6 +25,7 @@ export default async function Page( {
           }),
           prisma.post.count(),
       ]);
+      
       
  return(
    <>

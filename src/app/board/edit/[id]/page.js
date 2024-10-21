@@ -1,7 +1,7 @@
-import SectionMenu from "../../../../components/SectionMenu";
+import SectionMenu from "@/components/SectionMenu";
 import Link from "next/link"
-import { updatePost } from "../../../../actions/actions";
-import prisma from "../../../../lib/db";
+import { updatePost } from "@/actions/actions";
+import prisma from "@/lib/db";
 
 // 게시글 수정 페이지
 export default async function Page({ params, searchParams }) {
