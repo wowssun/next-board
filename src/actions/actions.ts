@@ -27,19 +27,25 @@ export async function createPost(data :{title: string, content: string, authorId
 }
 
 // 게시물 수정
-export async function updatePost(formData : FormData) {
+export async function updatePost(data :{title: string, content: string, authorId: string, boardId: number, page: number}) {
     // 아이디 string으로 넘어와서 number로 변경
-    const updateId = Number(formData.get('id'));
-    const updatePage = Number(formData.get('page'));
+    const boardId = data.boardId;
+    const updatePage = data.page;
+
+    const result = postSchema.safeParse(data);
+    if (!result.success) {
+      // 유효성 검사 실패 시 오류 발생
+      throw new Error(result.error.issues.map((issue) => issue.message).join(', '));
+    }
 
         await prisma.post.update({
-            where: { id : updateId },
+            where: { id : boardId },
             data: {
-                title: formData.get('title') as string,
-                content: formData.get('content') as string,
+                title: data.title as string,
+                content: data.content as string,
             },
           })
-          redirect(`/board/view/${updateId}?page=${updatePage}`);
+          redirect(`/board/view/${boardId}?page=${updatePage}`);
 }
 
 // 게시물 삭제  

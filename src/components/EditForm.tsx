@@ -1,14 +1,15 @@
 'use client'
 
 import Link from "next/link"
-import { updatePost } from "@/actions/actions";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { postSchema, postSchemaType } from "@/lib/zodSchemas";
+import { updatePost } from "@/actions/actions";
 
 export default function EditForm(props: any) {
     const id = props.id;
     const p= props.page;
+    const post = props.post;
 
     const {
         register,
@@ -17,9 +18,9 @@ export default function EditForm(props: any) {
       } = useForm<postSchemaType>({
         resolver: zodResolver(postSchema),
         defaultValues: {
-          title: '',
-          content: '',
-          authorId: '',
+          title: post.title,
+          content: post.content,
+          authorId: post.authorId,
           // 여기 들어오는 값은 이제 아이디값으로 들어오는 값이 기본값
         },
       });
@@ -28,21 +29,32 @@ export default function EditForm(props: any) {
       interface FormData {
         title: string;
         content: string;
-        authorId: string;
+        authorId: string; 
       }
       
       // handleSubmit로 데이터 유효성 체크한 뒤에 폼데이터 제출
       const onSubmit = async (formData : FormData) => {
-        console.log(id);
-        console.log(p);
-        // 여기서 서버에서 오는 결과 try-catch 처리
-    //     try {
-    //     //   await updatePost(formData);
-    //       console.log('게시물이 수정되었습니다.');
-    //     } catch (error: any) {
-    //       console.error('게시물 수정 실패:', error.message); // 에러 메시지 출력
-    //       alert('게시물 수정 실패! 관리자에게 문의해주세요.');
-    //     }
+
+       const data = {
+        boardId: id,
+        title: formData.title,
+        content: formData.content,
+        authorId: formData.authorId,
+        page: p,
+      }
+      
+        const editConfirm = confirm('게시물을 수정하시겠습니까?');
+
+        if(editConfirm) {
+          //여기서 서버에서 오는 결과 try-catch 처리
+        try {
+            await updatePost(data);
+            console.log('게시물이 수정되었습니다.');
+          } catch (error: any) {
+            console.error('게시물 수정 실패:', error.message); // 에러 메시지 출력
+            alert('게시물 수정 실패! 관리자에게 문의해주세요.');
+          }
+        }
       };
 
 return (
@@ -54,7 +66,6 @@ return (
                             <input type="text"
                              id="title" 
                              {...register('title')}
-                            //  defaultValue={post.title}
                              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" required/>
                         </div>
                         {/* {errors.title && <span className="text-red-500 text-xs ml-2">{errors.title.message}</span>} */}
@@ -63,7 +74,6 @@ return (
                             <input type="text" 
                             id="authorId" 
                             {...register('authorId')} 
-                            // value={post.authorId}
                             readOnly 
                             className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" required/>
                         </div>
@@ -72,7 +82,6 @@ return (
                             <textarea id="content" 
                             {...register('content')} 
                             rows={6} 
-                            // defaultValue={post.content}
                             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" ></textarea>
                         </div>
                         {/* {errors.content && <span className="text-red-500 text-xs ml-2">{errors.content.message}</span>} */}

@@ -2,9 +2,9 @@
 
 import { deletePost } from "@/actions/actions";
 
-export default function DeleteButton(props) {
+export default function DeleteButton(props: any) {
 
-    function handleButton(e) {
+    function handleButton(e: React.ChangeEvent<any>) {
         e.preventDefault();
         const delConfirm = confirm('게시물을 삭제하시겠습니까?');
 
