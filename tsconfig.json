@@ -14,7 +14,7 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "noEmit": true,
     "incremental": true,
     "module": "esnext",
@@ -37,7 +37,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/components/Header.js", "src/app/board/write/page.tsx", "src/app/board/edit/[id]/page.js", "src/app/board/view/[id]/page.js"  ],
+, "src/components/Header.js", "src/app/board/write/page.tsx", "src/app/board/edit/[id]/page.tsx", "src/app/board/view/[id]/page.tsx"  ],
   "exclude": [
     "node_modules"
   ]

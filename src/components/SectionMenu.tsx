@@ -1,4 +1,4 @@
-export default function SectionMenu(props) {
+export default function SectionMenu(props:any) {
     return (
         <section className="bg-[url('../images/line-note.jpg')] bg-[length:1061px] bg-center dark:bg-gray-900 pt-20 mb-20">
             <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
