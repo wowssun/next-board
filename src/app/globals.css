@@ -37,10 +37,10 @@ body {
   position: relative;
 }
 
- #JoinButton {
+ #joinButton {
   position: absolute;
-   top: 100px;
-    right: 5px;
+   top: 50%;
+   right: 2%;
 }
 
 

@@ -43,20 +43,12 @@ export const postSchema = z.object({
     }
   });
 
- // 아이디 중복체크
-export const asyncUserSchema = userSchema.superRefine(async ({ userId }, ctx) => {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { id: true },
+  export const loginSchema = z.object({
+    userId: z.string()
+    .min(1, { message: '아이디를 입력해주세요.' })
+    .max(10, { message: '아이디는 10자 이하로 입력해주세요.' }),
+    password: z.string()
+    .min(1, { message: '비밀번호를 입력해주세요.' }),
   });
 
-  if (user) {
-    ctx.addIssue({
-      code: 'custom',
-      message: '존재하는 아이디입니다.',
-      path: ['userId'],
-    });
-  }
-});
-  
 
