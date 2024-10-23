@@ -1,11 +1,10 @@
 
 import SectionMenu from "@/components/SectionMenu";
-import Link from "next/link"
-import { updatePost } from "@/actions/actions";
-import { zodResolver } from '@hookform/resolvers/zod';
 import prisma from "@/lib/db";
-import { postSchema, postSchemaType } from "@/lib/zodSchemas";
 import EditForm from "@/components/EditForm";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth"
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 
 interface Params {
@@ -16,6 +15,7 @@ interface SearchParams {
   page?: string; // page는 선택적 속성으로 string 형식
   [key: string]: any; 
 }
+
 
 // 게시글 수정 페이지
 export default async function Page({ params , searchParams,
@@ -42,6 +42,12 @@ export default async function Page({ params , searchParams,
       return {
           notFound: true, 
       };
+  }
+
+  const session = await getServerSession(authOptions);
+
+  if (!session || session?.user?.name !== post.authorId) {
+     redirect('/'); 
   }
 
     return (

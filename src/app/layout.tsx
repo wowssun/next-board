@@ -2,6 +2,7 @@ import localFont from 'next/font/local'
 import "./globals.css";
 import { Footer } from '@/components/Footer';
 import { Navbar } from '@/components/Navbar';
+import Providers from '@/components/Providers';
 
 const gmarkSansL = localFont({
   src: './fonts/GmarketSansTTFLight.ttf',
@@ -33,9 +34,11 @@ export default function RootLayout({ children: children }: { children: React.Rea
       <body
         className={`${gmarkSansM.className} antialiased`}
       >
-        <Navbar/>
-        {children}
-        <Footer/>
+        <Providers>
+          <Navbar/>
+          {children}
+          <Footer/>
+        </Providers>
       </body>
     </html>
   );

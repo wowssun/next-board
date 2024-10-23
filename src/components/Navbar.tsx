@@ -2,10 +2,12 @@
 
 import Link from 'next/link'
 import React, { useState } from "react"
+import { useSession, signOut } from 'next-auth/react';
 
 export function Navbar() {
 
     const [isOpen, setIsOpen] = useState(false); // 네비게이션 메뉴의 상태를 관리하는 상태 추가
+    const { data: session } = useSession(); // 세션 정보 가져오기
 
   const toggleMenu = () => {
     setIsOpen(!isOpen); // 버튼 클릭 시 상태 반전
@@ -23,10 +25,21 @@ export function Navbar() {
             <span className="self-center text-[#071952] text-2xl font-semibold whitespace-nowrap dark:text-white">Home</span>
         </Link>
         <div className="flex md:order-2 space-x-3 md:space-x-4 rtl:space-x-reverse">
-            <Link href={'/login'} className="text-white bg-[#86a1ce] hover:bg-[#658DA6] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        {session ? (
+             <Link href={'/login'} className="text-white bg-[#86a1ce] hover:bg-[#658DA6] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+             onClick={() => {
+                signOut(); // 로그아웃 함수 호출
+                closeMenu();
+              }}>
+                 로그아웃
+            </Link>
+            
+            ) : (
+                <Link href={'/login'} className="text-white bg-[#86a1ce] hover:bg-[#658DA6] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 onClick={closeMenu}>
                     로그인
-            </Link>
+              </Link>
+            )}
             <Link href={'/join'} className="text-white bg-[#86a1ce] hover:bg-[#658DA6] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 onClick={closeMenu}>
                     회원가입

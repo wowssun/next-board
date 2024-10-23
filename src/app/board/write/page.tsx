@@ -6,9 +6,26 @@ import { createPost } from "@/actions/actions";
 import { postSchema, postSchemaType } from "@/lib/zodSchemas";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
 
 // 게시글 작성 페이지
 export default function Page() {
+  const { data: session } = useSession(); // 세션 정보 가져오기
+  const [alertMessage, setAlertMessage] = useState('');
+  const router = useRouter();
+
+  useEffect(() => {
+
+    if (!session) {
+      setAlertMessage('권한이 없습니다. 홈으로 이동합니다.');
+      setTimeout(() => {
+        router.push('/'); // 3초 후 홈으로 리다이렉트
+      }, 3000);
+    }
+  }, [session, status, router]);
 
   const {
     register,
@@ -19,7 +36,7 @@ export default function Page() {
     defaultValues: {
       title: '',
       content: '',
-      authorId: '',
+      authorId: session?.user?.name || '',
       // 여기 들어오는 값은 이제 아이디값으로 들어오는 값이 기본값
     },
   });
@@ -48,6 +65,14 @@ export default function Page() {
   return (
     <>
         <SectionMenu title={'게시판'}/>
+        {alertMessage && (
+        <div className="flex justify-center items-center h-screen"> {/* 전체 화면을 사용하여 중앙 정렬 */}
+              <div className="alert alert-warning text-red-600 text-lg p-4 border border-red-600 rounded-md bg-red-100">
+                {alertMessage}
+              </div>
+          </div>
+          )}
+         {!alertMessage && (
         <section className="bg-white dark:bg-gray-900">
             <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
@@ -76,6 +101,7 @@ export default function Page() {
           </form>
           </div>
         </section>
+        )}
     </>
   )
 }

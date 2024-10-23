@@ -1,8 +1,10 @@
 import SectionMenu from "@/components/SectionMenu";
 import Link from "next/link"
 import prisma from "@/lib/db";
-import { deletePost } from "@/actions/actions";
 import DeleteButton from "@/components/DeleteButton";
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { updatePostViews } from "@/actions/actions";
 
 // 게시글 상세 조회 페이지
 export default async function Page({ params, searchParams }) {
@@ -16,6 +18,15 @@ export default async function Page({ params, searchParams }) {
           id: id,
         },
       })
+
+      // 서버에서 session 가져오기
+      const session = await getServerSession(authOptions);
+    
+      const isAuthor  = session?.user?.name === post.authorId;
+
+      if (!session || session?.user?.id !== post.authorId) {
+        await updatePostViews(post.id);
+      }
 
     return (
       <>
@@ -46,6 +57,7 @@ export default async function Page({ params, searchParams }) {
                         목록
                         </Link>
                     </div>
+                    {isAuthor && (
                     <div className="flex flex-wrap">
                         <Link 
                         href={`/board/edit/${post.id}?page=${p}`}
@@ -55,6 +67,7 @@ export default async function Page({ params, searchParams }) {
                         </Link>
                         <DeleteButton id={post.id}/>
                     </div>
+                    )}
                     </div> 
                 </article>
             </div>  

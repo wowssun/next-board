@@ -3,6 +3,7 @@ import SectionMenu from '@/components/SectionMenu';
 import Pagination from '@/components/Pagination';
 import './../globals.css';
 import prisma from "@/lib/db";
+import WriteButton from "@/components/WriteButton";
 
 // 게시판 목록 페이지
 export default async function Page( {
@@ -31,14 +32,7 @@ export default async function Page( {
    <>
     <SectionMenu title={'게시판'}/>
     <div>
-    <div className="relative sm:rounded-lg mx-auto mb-10 flex justify-end sm:justify-center">
-      <Link 
-         href={`/board/write`}
-         className="focus:outline-none text-[#071952] bg-[#FFDA76] hover:bg-[#F3CA52] focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
-         >
-         게시글 작성
-         </Link>
-    </div>
+    <WriteButton />
    {/* 게시판 목록 */}
       {posts && posts.length > 0 ? (
       <div id='tableId' className="relative overflow-x-auto shadow-md  sm:rounded-lg mx-auto mb-10 lg:w-[1000px]">
@@ -85,7 +79,7 @@ export default async function Page( {
                </div>
                {/* 게시글 조회수 */}
                <div className="px-6 py-2 sm:px-6 sm:py-4 text-center flex-none hidden sm:block text-sm text-gray-400 w-40">
-                  0(미정) {/* 게시글 조회수 */}
+               {post.views} {/* 게시글 조회수 */}
                </div>
             </div>
             ))}
