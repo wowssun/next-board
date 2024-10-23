@@ -4,6 +4,8 @@
 import prisma from "@/lib/db";
 import { postSchema } from "@/lib/zodSchemas";
 import { redirect } from 'next/navigation';
+import bcrypt from 'bcrypt';
+
 
 // 게시물 작성
 
@@ -59,12 +61,12 @@ export async function deletePost(deleteId: string) {
 }
 
 // 회원가입 (회원계정 생성)
-export async function createUser(formData : FormData) {
+export async function createUser(data :{userId: string, name: string, password: string, confirmPassword: string}) {
   await prisma.user.create({
     data: {
-      id: formData.get('userId') as string,
-      name: formData.get('name') as string,
-      password: formData.get('password') as string,
+      id: data.userId as string,
+      name: data.name as string,
+      password: await bcrypt.hash(data.password as string, 10),
     },
   });
   redirect('/');  // 가입을 축하합니다? 라는 상태메시지를 가져가야 하나? 뭔가 액션이 있었으면 좋겠다.
