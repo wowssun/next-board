@@ -69,12 +69,12 @@ export async function createUser(data :{userId: string, name: string, password: 
   }
 
   await prisma.user.create({
-    data: {
-      id: data.userId as string,
-      name: data.name as string,
-      password: await bcrypt.hash(data.password as string, 10),
-    },
-  });
+      data: {
+        id: data.userId as string,
+        name: data.name as string,
+        password: await bcrypt.hash(data.password as string, 10),
+      },
+    });
   redirect('/');  // 가입을 축하합니다? 라는 상태메시지를 가져가야 하나? 뭔가 액션이 있었으면 좋겠다.
 }
 
