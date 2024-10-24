@@ -38,7 +38,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/components/Header.js", "src/app/board/write/page.tsx", "src/app/board/edit/[id]/page.tsx", "src/app/board/view/[id]/page.tsx"  ],
+, "src/app/board/write/page.tsx", "src/app/board/edit/[id]/page.tsx", "src/app/board/view/[id]/page.tsx", "src/app/api/auth/[...nextauth]/route.ts"  ],
   "exclude": [
     "node_modules"
   ]
