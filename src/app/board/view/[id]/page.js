@@ -24,6 +24,7 @@ export default async function Page({ params, searchParams }) {
     
       const isAuthor  = session?.user?.name === post.authorId;
 
+      // 조회수 증가 ( 조회수 중복 처리에 대해서는 고민)
       if (!session || session?.user?.id !== post.authorId) {
         await updatePostViews(post.id);
       }
