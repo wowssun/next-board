@@ -4,7 +4,7 @@ import prisma from "@/lib/db";
 import DeleteButton from "@/components/DeleteButton";
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
-import { updatePostViews } from "@/actions/actions";
+import { updatePostViews } from "@/actions/postActions";
 
 // 게시글 상세 조회 페이지
 export default async function Page({ params, searchParams }) {

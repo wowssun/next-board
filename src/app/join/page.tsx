@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import SectionMenu from "@/components/SectionMenu";
-import { chekUserId, createUser } from "@/actions/actions";
+import { chekUserId, createUser } from "@/actions/userActions";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userSchema, userSchemaType } from "@/lib/zodSchemas";

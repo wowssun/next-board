@@ -1,6 +1,6 @@
 'use client'
 
-import { deletePost } from "@/actions/actions";
+import { deletePost } from "@/actions/postActions";
 
 export default function DeleteButton(props: any) {
 

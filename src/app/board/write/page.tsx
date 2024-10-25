@@ -2,7 +2,7 @@
 
 import SectionMenu from "@/components/SectionMenu";
 import Link from "next/link"
-import { createPost } from "@/actions/actions";
+import { createPost } from "@/actions/postActions";
 import { postSchema, postSchemaType } from "@/lib/zodSchemas";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

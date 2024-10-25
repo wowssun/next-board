@@ -4,7 +4,7 @@ import Link from "next/link"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { postSchema, postSchemaType } from "@/lib/zodSchemas";
-import { updatePost } from "@/actions/actions";
+import { updatePost } from "@/actions/postActions";
 
 export default function EditForm(props: any) {
     const id = props.id;

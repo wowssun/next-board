@@ -1,4 +1,4 @@
-import { login } from "@/actions/actions";
+import { login } from "@/actions/userActions";
 import NextAuth, { Session, User } from "next-auth"
 import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
