@@ -14,7 +14,7 @@ export default async function Page({
 	const { page, ...queryParams } = searchParams;
 	const p = page ? parseInt(page) : 1;
 
-	const ITEM_PER_PAGE = Number(process.env.ITEM_PER_PAGE) || 10;
+	const ITEM_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEM_PER_PAGE) || 10;
 
 	const [posts, count] = await prisma.$transaction([
 		prisma.post.findMany({
