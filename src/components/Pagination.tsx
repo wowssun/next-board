@@ -2,7 +2,12 @@
 
 import { useRouter } from "next/navigation";
 
-export default function Pagination({ page, count } : { page: number; count: number}) {
+type OwnProps = {    
+   page: number;
+   count: number;
+}
+
+export default function Pagination({ page, count } : OwnProps) {1
 
    const ITEM_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEM_PER_PAGE) || 10;
 
